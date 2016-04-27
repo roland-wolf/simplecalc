@@ -6,11 +6,6 @@
 #include <stdlib.h>
 #include "parser.c"
 
-std::string getStr(const char* beg, const char* end)
-{
-    return std::string(beg).substr(0, end-beg);
-}
-
 
 %%{
 
@@ -46,7 +41,7 @@ action closep_tok {
 }
 
 action number_tok{ 
-   Parse(lparser, DOUBLE, atof(getStr(ts, te).c_str()));
+   Parse(lparser, DOUBLE, atof(std::string(ts, te).c_str()));
 }
 
 number = [0-9]+('.'[0-9]+)?;
