@@ -11,7 +11,6 @@ add_custom_command(
 
 # run lemon
 add_custom_target(parser
-    #OUTPUT ${CMAKE_BINARY_DIR}/parser.c   OUTPUT ${CMAKE_BINARY_DIR}/parser.c
     COMMAND lemon ${CMAKE_BINARY_DIR}/parser.y
     DEPENDS ${CMAKE_BINARY_DIR}/parser.y
     WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
@@ -21,8 +20,13 @@ add_custom_target(parser
 add_custom_command(
     OUTPUT ${CMAKE_BINARY_DIR}/lexer.cpp
     COMMAND ragel ${CMAKE_SOURCE_DIR}/lexer.rl -o ${CMAKE_BINARY_DIR}/lexer.cpp
+    DEPENDS ${CMAKE_SOURCE_DIR}/lexer.rl
 )
 
+add_custom_target(IDE SOURCES
+    parser.y
+    lexer.rl
+    )
 
 # build executable
 add_executable(calc ${CMAKE_BINARY_DIR}/lexer.cpp)
